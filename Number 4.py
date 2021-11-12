@@ -1,18 +1,40 @@
-import re
 import os
 
 os.chdir("C:/Users/ferdi/OneDrive/Documents/Files_Exercise")
-file = open("Test.txt","w")
 
-inp = ("Mr. Miyagi bought cheapsite.com for 1.5 million dollars, i.e. he paid a lot for it. Did he mind? Adam Jones Jr. thinks he didn't. In any case, this isn't true... Well, with a probability of .9 it isn't.")
-rum = re.split("(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s", inp)
+print("Text converter into sentences!")
+inp = input("Enter your file with filename.txt template: ")
+file = open(inp,"r")
+file1 = file.read()
+file3 = open("Test.txt","w")
+file2 = file1.split()
 
-count = 0
+def wordsel(file2):
+    honor = {"Dr.", "Mr.", "Ms.", "Mrs.", "Miss.", "Sir.", "Mx.", "Fr.", "Pr.", "Br.",
+            "Sr.", "Elder.", "Prof.", "i.e.", "e.g.", "dr.", "mr.", "ms.", "mrs.", "miss.",
+            "sir.", "mx.", "fr.", "pr.", "br.", "sr.", "elder.", "prof."}
+    bound = {".", "!", "?"}
+    text1 = ""
+    count = 0
+    count1 = len(file2)
+    for i in file2:
+        last = i[-1]
+        count += 1
+        if last in bound:
+            if i in honor:
+                text1 += i
+                text1 += " "
+            else:
+                text1 += i
+                if count == count1:
+                    x = False
+                else:
+                    text1 += os.linesep
+        else:
+            text1 += i
+            text1 += " "
+    return text1
 
-for i in rum:
-    file.write(i)
-    count += 1
-    if count < len(rum):
-        file.write("\n")
-    else:
-        False
+text1 = wordsel(file2)
+file3.writelines(text1)
+print(text1)
